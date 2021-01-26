@@ -19,6 +19,7 @@ import com.example.contactroom.viewmodel.SubscriberViewModelFactory
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: SubscriberViewModel
+    private lateinit var adapter: MyRecyclerviewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,17 +45,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerview() {
         binding.subscriberRecyclerview.layoutManager = LinearLayoutManager(this)
+        adapter = MyRecyclerviewAdapter { selectedItem: Subscriber -> listItemClicked(selectedItem) }
+        binding.subscriberRecyclerview.adapter = adapter
         displaySubscribersList()
     }
 
     private fun displaySubscribersList() {
         viewModel.subscribers.observe(this, Observer {
-            Log.i("MYTAG", it.toString())
-            binding.subscriberRecyclerview.adapter = MyRecyclerviewAdapter(it) { selectedItem: Subscriber ->
-                listItemClicked(
-                    selectedItem
-                )
-            }
+//            Log.i("MYTAG", it.toString())
+            adapter.setList(it)
+            adapter.notifyDataSetChanged()
+
         })
     }
 

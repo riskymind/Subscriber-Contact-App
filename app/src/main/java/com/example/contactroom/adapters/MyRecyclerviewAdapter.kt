@@ -8,8 +8,9 @@ import com.example.contactroom.R
 import com.example.contactroom.databinding.ListItemBinding
 import com.example.contactroom.db.Subscriber
 
-class MyRecyclerviewAdapter(private val subscribersList: List<Subscriber>,
-                            private val clickListener:(Subscriber)-> Unit): RecyclerView.Adapter<MyViewHolder>() {
+class MyRecyclerviewAdapter(private val clickListener:(Subscriber)-> Unit): RecyclerView.Adapter<MyViewHolder>() {
+
+    private val subscribersList = ArrayList<Subscriber>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -24,6 +25,11 @@ class MyRecyclerviewAdapter(private val subscribersList: List<Subscriber>,
 
     override fun getItemCount(): Int {
        return subscribersList.size
+    }
+
+    fun setList(subscribers: List<Subscriber>) {
+        subscribersList.clear()
+        subscribersList.addAll(subscribers)
     }
 }
 
